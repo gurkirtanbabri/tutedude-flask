@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TODO Submission Form</title>
+    <style>
+        .error { color: red; font-weight: bold; }
+        .success { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Todo page</h1>
+   
+      {% if errorMessage %}
+        <ul class="flashes">
+          <li class="error">{{ errorMessage }}</li>
+        </ul>
+      {% endif %}
+   
+
+    <form method="POST" action="/todo">
+        <label for="itemName">Item name:</label><br>
+        <input type="text" id="itemName" name="itemName" required><br><br>
+        
+        <label for="itemDescription">item description:</label><br>
+        <input type="itemDescription" id="itemDescription" name="itemDescription" required><br><br>
+        <input type="submit" value="Submit Data">
+    </form>
+</body>
+</html>

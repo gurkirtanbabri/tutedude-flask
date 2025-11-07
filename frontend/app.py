@@ -24,6 +24,26 @@ def home():
      
   return render_template('index.html', )
 
+@app.route('/todo', methods=['GET', 'POST'])
+def todo():
+  if request.method == 'POST':
+    data = dict(request.form)
+    print(data)
+    response = requests.post(BACKEND_API_URL + "/submittodoitem", json=data)
+    print(response)
+
+    if response.status_code == 200:
+      resJson = response.json()
+      if (resJson.get("status") == True):
+         return redirect(url_for('success'))
+      else:
+         return render_template('todoTemplate.html', errorMessage="Submission failed")
+    else:
+       return render_template('todoTemplate.html', errorMessage="Submission failed")
+    
+  return render_template('todoTemplate.html', )
+
+
 @app.route('/success')
 def success():
   return render_template('success.html')
