@@ -11,6 +11,8 @@ app = Flask(__name__)
 client =  pymongo.MongoClient(os.getenv("MONGODB_URI"))
 db = client.test
 collection = db['tuteDudeUsers']
+todoCollection = db['todo']
+
 
 @app.route('/api', methods=['GET'])
 def get_data():
@@ -24,6 +26,15 @@ def post_data():
     try:
         data = request.get_json()
         collection.insert_one(data)
+        return jsonify({"status": True}), 200
+    except Exception as e:
+        return jsonify({"status": False, "error": str(e)}), 500
+    
+@app.route('/submittodoitem', methods=['POST'])
+def post_data(): 
+    try:
+        data = request.get_json()
+        todoCollection.insert_one(data)
         return jsonify({"status": True}), 200
     except Exception as e:
         return jsonify({"status": False, "error": str(e)}), 500
